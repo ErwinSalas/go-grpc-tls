@@ -5,7 +5,6 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"runtime"
 
@@ -21,8 +20,8 @@ func GetModuleDir() (string, error) {
 		return "", fmt.Errorf("failed to get module directory")
 	}
 
-	absPath, err := filepath.Abs(filename)
-	return absPath, err
+	absPath := filepath.Dir(filename)
+	return absPath, nil
 }
 
 func (cm *SelfSignedCertManager) LoadServerCertificate() (credentials.TransportCredentials, error) {
@@ -34,8 +33,8 @@ func (cm *SelfSignedCertManager) LoadServerCertificate() (credentials.TransportC
 
 	fmt.Println(currentDir)
 
-	serverCertPath := currentDir + "../../cert/server-cert.pem"
-	serverKeyPath := currentDir + "../../cert/server-key.pem"
+	serverCertPath := filepath.Join(currentDir, "..", "..", "cert", "server-cert.pem")
+	serverKeyPath := filepath.Join(currentDir, "..", "..", "cert", "server-key.pem")
 
 	serverCert, err := tls.LoadX509KeyPair(serverCertPath, serverKeyPath)
 	if err != nil {
@@ -52,13 +51,12 @@ func (cm *SelfSignedCertManager) LoadServerCertificate() (credentials.TransportC
 }
 
 func (cm *SelfSignedCertManager) LoadClientCredentials() (credentials.TransportCredentials, error) {
-	currentDir, err := os.Getwd()
+	currentDir, err := GetModuleDir()
 	if err != nil {
 		return nil, err
 	}
 
-	// Construir la ruta absoluta a los certificados
-	caCertPath := currentDir + "../../cert/ca-cert.pem"
+	caCertPath := filepath.Join(currentDir, "..", "..", "cert", "ca-cert.pem")
 	// Load certificate of the CA who signed server's certificate
 	pemServerCA, err := ioutil.ReadFile(caCertPath)
 	if err != nil {
