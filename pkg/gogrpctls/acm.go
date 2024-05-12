@@ -35,7 +35,7 @@ func getAwsClient() (*acm.Client, error) {
 type AwsCertManager struct {
 }
 
-func (cm *AwsCertManager) loadClientCredentials() (grpcCreds.TransportCredentials, error) {
+func (cm *AwsCertManager) LoadClientCredentials() (grpcCreds.TransportCredentials, error) {
 	// var address string = "..."      // URL of the gRPC server
 
 	client, err := getAwsClient()
@@ -59,7 +59,7 @@ func (cm *AwsCertManager) loadClientCredentials() (grpcCreds.TransportCredential
 
 }
 
-func (cm *AwsCertManager) loadServerCertificate() (credentials.TransportCredentials, error) {
+func (cm *AwsCertManager) LoadServerCertificate() (credentials.TransportCredentials, error) {
 	acmClient, err := getAwsClient()
 
 	if err != nil {

@@ -7,8 +7,8 @@ import (
 )
 
 type CertManager interface {
-	loadServerCertificate() (credentials.TransportCredentials, error)
-	loadClientCredentials() (credentials.TransportCredentials, error)
+	LoadServerCertificate() (credentials.TransportCredentials, error)
+	LoadClientCredentials() (credentials.TransportCredentials, error)
 }
 
 func NewCertManager() CertManager {

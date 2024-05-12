@@ -12,7 +12,7 @@ import (
 type SelfSignedCertManager struct {
 }
 
-func (cm *SelfSignedCertManager) loadServerCertificate() (credentials.TransportCredentials, error) {
+func (cm *SelfSignedCertManager) LoadServerCertificate() (credentials.TransportCredentials, error) {
 	// Load server's certificate and private key
 	serverCert, err := tls.LoadX509KeyPair("./cert/server-cert.pem", "./cert/server-key.pem")
 	if err != nil {
@@ -28,7 +28,7 @@ func (cm *SelfSignedCertManager) loadServerCertificate() (credentials.TransportC
 	return credentials.NewTLS(config), nil
 }
 
-func (cm *SelfSignedCertManager) loadClientCredentials() (credentials.TransportCredentials, error) {
+func (cm *SelfSignedCertManager) LoadClientCredentials() (credentials.TransportCredentials, error) {
 	// Load certificate of the CA who signed server's certificate
 	pemServerCA, err := ioutil.ReadFile("./cert/ca-cert.pem")
 	if err != nil {
