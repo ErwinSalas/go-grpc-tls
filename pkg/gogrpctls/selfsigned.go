@@ -14,7 +14,7 @@ type SelfSignedCertManager struct {
 
 func (cm *SelfSignedCertManager) LoadServerCertificate() (credentials.TransportCredentials, error) {
 	// Load server's certificate and private key
-	serverCert, err := tls.LoadX509KeyPair("./cert/server-cert.pem", "./cert/server-key.pem")
+	serverCert, err := tls.LoadX509KeyPair("cert/server-cert.pem", "cert/server-key.pem")
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func (cm *SelfSignedCertManager) LoadServerCertificate() (credentials.TransportC
 
 func (cm *SelfSignedCertManager) LoadClientCredentials() (credentials.TransportCredentials, error) {
 	// Load certificate of the CA who signed server's certificate
-	pemServerCA, err := ioutil.ReadFile("./cert/ca-cert.pem")
+	pemServerCA, err := ioutil.ReadFile("cert/ca-cert.pem")
 	if err != nil {
 		return nil, err
 	}
