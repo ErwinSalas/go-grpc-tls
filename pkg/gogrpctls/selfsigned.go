@@ -33,8 +33,8 @@ func (cm *SelfSignedCertManager) LoadServerCertificate() (credentials.TransportC
 
 	fmt.Println(currentDir)
 
-	serverCertPath := filepath.Join(currentDir, "..", "..", "cert", "server-cert.pem")
-	serverKeyPath := filepath.Join(currentDir, "..", "..", "cert", "server-key.pem")
+	serverCertPath := filepath.Join(currentDir, "..", "..", "cert", "server.crt")
+	serverKeyPath := filepath.Join(currentDir, "..", "..", "cert", "server.key")
 
 	serverCert, err := tls.LoadX509KeyPair(serverCertPath, serverKeyPath)
 	if err != nil {
